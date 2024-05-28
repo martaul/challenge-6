@@ -58,20 +58,21 @@ export const Logout = async(req, res) => {
 
 export const Me = async (req, res) => {
     try {
-      const user = await Users.findOne({
-        where: {
-          id: user.id,
-        },
-        include: ["name", "email", "role"],
-      });
-  
-      res.status(200).json({
-        status: "Success",
-        data: {
-          user,
-        },
-      });
-    } catch (err) {
-        res.status(404).json({msg:"User not found"});
+        const userId = req.user.id
+        const user = await Users.findOne({
+            attributes:['id','name','email','role'],
+            where: {
+                id: userId
+            }
+        });
+
+        if (!user) {
+            return res.status(404).json({ msg: "Pengguna tidak ditemukan" });
+        }
+
+        res.json(user);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: "Terjadi kesalahan pada server" });
     }
 };
