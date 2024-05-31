@@ -11,14 +11,14 @@ export const refreshToken = async(req, res) => {
             }
         });
         if(!user) return res.sendStatus(403);
-        jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, duser) => {
+        jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
             if(err) return res.sendStatus(403);
             const userId = user.id;
             const name = user.name;
             const email = user.email;
             const role = user.role;
             const accessToken = jwt.sign({userId, name, email, role}, process.env.ACCESS_TOKEN_SECRET,{
-                expiresIn: '40s'
+                expiresIn: '1d'
             });
             res.json({ accessToken });
         });

@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import Users from "../models/UserModel.js";
 
 export const verifyToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
@@ -10,17 +9,19 @@ export const verifyToken = (req, res, next) => {
         if(err) return res.sendStatus(403);
         req.user = user;
         next();
+        console.log(user);
     })
+    
 }
 
-export const adminOnly = async (req, res, next) =>{
-    const user = await Users.findOne({
-        attributes:['role']
-    });
-    if (user.role == "member") {
-        return res.status(403).json({ msg: "Akses terlarang" });
-    }
+// export const adminOnly = async (req, res, next) =>{
+//     const user = await Users.findOne({
+//         attributes:['role']
+//     });
+//     if (user.role == "member") {
+//         return res.status(403).json({ msg: "Akses terlarang" });
+//     }
 
-    // Jika semua verifikasi lolos, lanjutkan ke middleware berikutnya
-    next();
-}
+//     // Jika semua verifikasi lolos, lanjutkan ke middleware berikutnya
+//     next();
+//}

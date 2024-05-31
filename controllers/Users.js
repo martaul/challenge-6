@@ -16,7 +16,7 @@ export const Login = async(req, res) => {
         const email = user.email;
         const role = user.role;
         const accessToken = jwt.sign({userId, name, email, role}, process.env.ACCESS_TOKEN_SECRET,{
-            expiresIn: '60s'
+            expiresIn: '1d'
         });
         const refreshToken = jwt.sign({userId, name, email, role}, process.env.REFRESH_TOKEN_SECRET,{
             expiresIn: '1d'
@@ -58,20 +58,15 @@ export const Logout = async(req, res) => {
 
 export const Me = async (req, res) => {
     try {
-      const user = await Users.findOne({
-        where: {
-          id: user.id,
-        },
-        include: ["name", "email", "role"],
-      });
-  
-      res.status(200).json({
-        status: "Success",
-        data: {
-          user,
-        },
-      });
-    } catch (err) {
-        res.status(404).json({msg:"User not found"});
+        const user = req.user;
+        res.status(200).json({
+          status: "success",
+          data:  {
+            user,
+          },
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: "Terjadi kesalahan pada server" });
     }
 };
