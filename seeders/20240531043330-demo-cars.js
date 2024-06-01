@@ -6,7 +6,7 @@ module.exports = {
    await queryInterface.bulkInsert('cars', [{
     id: 5,
     name: 'Honda',
-    harga: 'This is John Doe',
+    harga: '1.000.000',
     image: '1716995530224-download (8).jpg',
     createdAt: new Date(),
     updatedAt: new Date(),

@@ -13,15 +13,3 @@ export const verifyToken = (req, res, next) => {
     })
     
 }
-
-// export const adminOnly = async (req, res, next) =>{
-//     const user = await Users.findOne({
-//         attributes:['role']
-//     });
-//     if (user.role == "member") {
-//         return res.status(403).json({ msg: "Akses terlarang" });
-//     }
-
-//     // Jika semua verifikasi lolos, lanjutkan ke middleware berikutnya
-//     next();
-//}
